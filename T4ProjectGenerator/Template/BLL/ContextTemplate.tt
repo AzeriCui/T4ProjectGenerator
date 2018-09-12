@@ -1,0 +1,114 @@
+﻿<#@ template language="C#" inherits="Base" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+using System;
+using System.Data;
+using System.Data.SqlClient;
+using <#=        Config.CommonNamespace #>;
+
+namespace <#=        Config.ContextNamespace #>
+{
+    public partial class <#=        Config.ContextClassPrefix #>ContextWrapper : DbProviderFactory, IDisposable
+    {
+        #region Context
+        internal class <#=        Config.ContextClassPrefix #>Context : IDbContextComponent
+        {
+            public IDbConnection Connection { get; private set; }
+
+            public IDbTransaction Transaction { get; set; }
+
+            public <#=        Config.ContextClassPrefix #>Context(string connectionString)
+            {
+                this.Connection = new SqlConnection(connectionString);
+                if (this.Connection.State != ConnectionState.Open)
+                {
+                    this.Connection.Open();
+                }
+            }
+        }
+
+        protected override IDbContextComponent Context { get; set; }
+        private bool _Disposed = false;
+
+        public <#=        Config.ContextClassPrefix #>ContextWrapper()
+        {
+            string connectionString = ConfigManager.GetValue("<#=        Config.ContextConnectionStringKey #>");
+            Context = new <#=        Config.ContextClassPrefix #>Context(connectionString);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this._Disposed)
+            {
+<#
+    foreach(DataSchema item in _ColumnList)
+    {
+
+#>
+                if (this._Client<#=            item.TableName #> != null)
+                {
+                    this._Client<#=            item.TableName #> = null;
+                }
+<#
+    }
+
+ #>
+                if (disposing)
+                {
+                    if (IsBeginTrans)
+                    {
+                        Rollback();
+                    }
+                    if (Context.Transaction != null)
+                    {
+                        Context.Transaction.Dispose();
+                        Context.Transaction = null;
+                    }
+                    if (Context.Connection != null)
+                    {
+                        Context.Connection.Close();
+                        Context.Connection.Dispose();
+                    }
+                }
+            }
+            this._Disposed = true;
+        }
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
+
+        #region Client属性
+<#
+    foreach(DataSchema item in _ColumnList)
+    {
+
+#>
+        private <#=            item.TableName #><#=            Config.ServiceClassSuffix #> _Client<#=            item.TableName #> = null;
+        /// <summary>
+        /// <#=            item.TableDescription #>
+        /// </summary>
+        public <#=            item.TableName #><#=            Config.ServiceClassSuffix #> Client<#=            item.TableName #>
+        {
+            get
+            {
+                if (this._Client<#=            item.TableName #> == null)
+                {
+                    this._Client<#=            item.TableName #> = new <#=            item.TableName #><#=            Config.ServiceClassSuffix #>(this.Context);
+                }
+                return _Client<#=            item.TableName #>;
+            }
+        }
+
+<#
+    }
+
+ #>
+        #endregion
+    }
+}

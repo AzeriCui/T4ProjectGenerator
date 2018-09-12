@@ -1,0 +1,21 @@
+﻿<#@ template language="C#" inherits="Base" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using <#=        Config.CommonNamespace #>;
+using <#=        Config.ModelNamespace #>;
+
+namespace <#=        Config.ManagerNamespace #>
+{
+    /// <summary>
+    /// <#=        _ColumnList.FirstOrDefault().TableDescription #>
+    /// </summary>
+    public partial class <#=        _TableName #><#=        Config.ManagerClassSuffix #>
+    {
+
+    }
+}

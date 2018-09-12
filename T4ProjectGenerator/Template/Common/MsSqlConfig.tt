@@ -1,0 +1,66 @@
+﻿<#@ template language="C#" inherits="Base" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+namespace <#=        Config.CommonNamespace #>
+{
+    public class MsSqlConfig
+    {
+        /// <summary>
+        /// insert into {0} ({1}) values ({2})
+        /// </summary>
+        public const string INSERT_FORMAT = "INSERT INTO {0} ({1}) VALUES ({2}) ";
+
+        /// <summary>
+        /// update {0} set {1} where {2}
+        /// </summary>
+        public const string UPDATE_FORMAT = "UPDATE {0} SET {1} WHERE {2} ";
+
+        /// <summary>
+        /// delete from {0} where {1}
+        /// </summary>
+        public const string DELETE_FORMAT = "DELETE FROM {0} WHERE {1} ";
+
+        /// <summary>
+        /// select count(*) from {0} 
+        /// </summary>
+        public const string SELECT_ALL_COUNT_FORMAT = "SELECT COUNT(*) FROM {0} ";
+
+        /// <summary>
+        /// select count(*) from {0} where {1} 
+        /// </summary>
+        public const string SELECT_COUNT_FORMAT = "SELECT COUNT(*) FROM {0} WHERE {1} ";
+
+        /// <summary>
+        /// select top({2}) * from {0} where {1}
+        /// </summary>
+        public const string SELECT_TOP_FORMAT = "SELECT TOP({2}) * FROM {0} WHERE {1} ";
+
+        /// <summary>
+        /// select top({2}) * from {0} where {1} order by {3}
+        /// </summary>
+        public const string SELECT_TOP_ORDER_BY_FORMAT = "SELECT TOP({2}) * FROM {0} WHERE {1} ORDER BY {3} ";
+
+        /// <summary>
+        /// select * from {0} 
+        /// </summary>
+        public const string SELECT_ALL_FORMAT = "SELECT * FROM {0} ";
+
+        /// <summary>
+        /// select * from {0} where {1} 
+        /// </summary>
+        public const string SELECT_FORMAT = "SELECT * FROM {0} WHERE {1} ";
+
+        /// <summary>
+        /// select * from {0} where {1} order by {2} 
+        /// </summary>
+        public const string SELECT_ORDER_BY_FORMAT = "SELECT * FROM {0} WHERE {1} ORDER BY {2} ";
+
+        /// <summary>
+        /// select * from (select row_number() over (order by {2}) as rowindex, * from {0} where {1}) as t where t.rowindex between {3} and {4} 
+        /// </summary>
+        public const string SELECT_PAGE_FORMAT = "SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY {2}) AS RowIndex, * FROM {0} WHERE {1}) AS T WHERE T.RowIndex BETWEEN {3} AND {4} ";
+    }
+}

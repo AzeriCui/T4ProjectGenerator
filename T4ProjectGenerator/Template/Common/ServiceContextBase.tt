@@ -1,0 +1,153 @@
+﻿<#@ template language="C#" inherits="Base" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+using System;
+using System.Collections.Generic;
+
+namespace <#=        Config.CommonNamespace #>
+{
+    public abstract class ServiceContextBase<TManager>
+        where TManager : MsSqlAccessBase
+    {
+        protected abstract TManager Manager { get; set; }
+
+        public ServiceContextBase() { }
+
+        #region 基础方法
+        /// <summary>
+        /// 添加或批量添加
+        /// </summary>
+        public int Add<TEntity>(params TEntity[] entities)
+            where TEntity : class
+        {
+            return this.Manager.Add<TEntity>(entities);
+        }
+
+        /// <summary>
+        /// 单个添加
+        /// </summary>
+        public TIdentity Add<TEntity, TIdentity>(TEntity entity)
+            where TEntity : class
+            where TIdentity : IConvertible
+        {
+            return this.Manager.Add<TEntity, TIdentity>(entity);
+        }
+
+        /// <summary>
+        /// 修改
+        /// </summary>
+        public int Update<TEntity>(TEntity entity)
+            where TEntity : class
+        {
+            return this.Manager.Update<TEntity>(entity);
+        }
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        public int Delete(Expr expr)
+        {
+            return this.Manager.Delete(expr);
+        }
+
+        /// <summary>
+        /// 判断存在
+        /// </summary>
+        public bool IsExist(Expr expr)
+        {
+            return this.Manager.IsExist(expr);
+        }
+
+        /// <summary>
+        /// 总数量
+        /// </summary>
+        public int GetCount()
+        {
+            return this.Manager.GetCount();
+        }
+
+        /// <summary>
+        /// 查询条件数量
+        /// </summary>
+        public int GetCount(Expr expr)
+        {
+            return this.Manager.GetCount(expr);
+        }
+
+        /// <summary>
+        /// 查询实体
+        /// </summary>
+        public TEntity Get<TEntity>(Expr expr)
+            where TEntity : class
+        {
+            return this.Manager.Get<TEntity>(expr);
+        }
+
+        /// <summary>
+        /// 查询实体
+        /// </summary>
+        public TEntity Get<TEntity>(Expr expr, OrderByExpr orderBy)
+            where TEntity : class
+        {
+            return this.Manager.Get<TEntity>(expr, orderBy);
+        }
+
+        /// <summary>
+        /// 查询列表
+        /// </summary>
+        public IEnumerable<TEntity> GetList<TEntity>()
+            where TEntity : class
+        {
+            return this.Manager.GetList<TEntity>();
+        }
+
+        /// <summary>
+        /// 查询列表
+        /// </summary>
+        public IEnumerable<TEntity> GetList<TEntity>(Expr expr)
+            where TEntity : class
+        {
+            return this.Manager.GetList<TEntity>(expr);
+        }
+
+        /// <summary>
+        /// 查询列表
+        /// </summary>
+        public IEnumerable<TEntity> GetList<TEntity>(Expr expr, int top)
+            where TEntity : class
+        {
+            return this.Manager.GetList<TEntity>(expr, top);
+        }
+
+        /// <summary>
+        /// 查询列表
+        /// </summary>
+        public IEnumerable<TEntity> GetList<TEntity>(Expr expr, int top, OrderByExpr orderBy)
+            where TEntity : class
+        {
+            return this.Manager.GetList<TEntity>(expr, top, orderBy);
+        }
+
+        /// <summary>
+        /// 查询列表
+        /// </summary>
+        public IEnumerable<TEntity> GetList<TEntity>(Expr expr, OrderByExpr orderBy)
+            where TEntity : class
+        {
+            return this.Manager.GetList<TEntity>(expr, orderBy);
+        }
+
+        /// <summary>
+        /// 查询列表
+        /// </summary>
+        public IEnumerable<TEntity> GetList<TEntity>(Expr expr, OrderByExpr orderBy, int startPage, int endPage)
+            where TEntity : class
+        {
+            return this.Manager.GetList<TEntity>(expr, orderBy, startPage, endPage);
+        }
+        #endregion
+
+    }
+}

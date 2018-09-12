@@ -1,0 +1,27 @@
+﻿<#@ template language="C#" inherits="Base" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using <#=        Config.CommonNamespace #>;
+using <#=        Config.ManagerNamespace #>;
+
+namespace <#=        Config.ServiceNamespace #>
+{
+    /// <summary>
+    /// <#=        _ColumnList.FirstOrDefault().TableDescription #>
+    /// </summary>
+    public partial class <#=        _TableName #><#=        Config.ServiceClassSuffix #> : ServiceContextBase<<#=        _TableName #><#=        Config.ManagerClassSuffix #>>
+    {
+        protected override <#=        _TableName #><#=        Config.ManagerClassSuffix #> Manager { get; set; }
+
+        public <#=        _TableName #><#=        Config.ServiceClassSuffix #>(IDbContextComponent context)
+        {
+            this.Manager = new <#=        _TableName #><#=        Config.ManagerClassSuffix #>(context);
+        }
+
+    }
+}

@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A1946AA2-2E17-43B2-8D4B-7E57623096C3}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>T4ProjectGenerator</RootNamespace>
+    <AssemblyName>T4ProjectGenerator</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Dapper, Version=1.50.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.50.4\lib\net451\Dapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Domain\CommonBuilder.cs" />
+    <Compile Include="Domain\DataManager.cs" />
+    <Compile Include="Domain\ProjectConfig.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Template\BLL\ContextTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Template\BLL\ServiceDevelopTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ServiceDevelopTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Template\BLL\ContextTemplateCode.cs" />
+    <Compile Include="Template\BLL\ServiceDevelopTemplateCode.cs" />
+    <Compile Include="Template\BLL\ServiceTemplateCode.cs" />
+    <Compile Include="Template\BLL\ServiceTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ServiceTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Template\Common\ConfigManager.cs">
+      <DependentUpon>ConfigManager.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Template\Common\ConfigManagerCode.cs" />
+    <Compile Include="Template\Common\ServiceContextBaseCode.cs" />
+    <Compile Include="Template\Common\MsSqlConfigCode.cs" />
+    <Compile Include="Template\Common\MsSqlAccessBaseCode.cs" />
+    <Compile Include="Template\Common\IDbContextComponentCode.cs" />
+    <Compile Include="Template\Common\ExprCode.cs" />
+    <Compile Include="Template\Common\DbProviderFactoryCode.cs" />
+    <Compile Include="Template\Common\DbProviderFactory.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DbProviderFactory.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Template\Common\Expr.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Expr.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Template\Common\IDbContextComponent.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IDbContextComponent.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Template\Common\MsSqlAccessBase.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MsSqlAccessBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Template\Common\MsSqlConfig.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MsSqlConfig.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Template\Common\ServiceContextBase.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ServiceContextBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Template\Core\Base.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Base.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Template\Core\BaseCode.cs" />
+    <Compile Include="Template\DAL\ManagerDevelopTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ManagerDevelopTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Template\DAL\ManagerTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ManagerTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Template\DAL\ManagerDevelopTemplateCode.cs" />
+    <Compile Include="Template\DAL\ManagerTemplateCode.cs" />
+    <Compile Include="Template\Model\ModelTemplateCode.cs" />
+    <Compile Include="Template\Model\ModelTemplate.cs">
+      <DependentUpon>ModelTemplate.tt</DependentUpon>
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+    <None Include="ProjectConfig.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\BLL\ContextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ContextTemplate.cs</LastGenOutput>
+      <CustomToolNamespace>T4ProjectGenerator</CustomToolNamespace>
+    </None>
+    <None Include="Template\BLL\ServiceDevelopTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ServiceDevelopTemplate.cs</LastGenOutput>
+      <CustomToolNamespace>T4ProjectGenerator</CustomToolNamespace>
+    </None>
+    <None Include="Template\BLL\ServiceTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ServiceTemplate.cs</LastGenOutput>
+      <CustomToolNamespace>T4ProjectGenerator</CustomToolNamespace>
+    </None>
+    <None Include="Template\Common\DbProviderFactory.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DbProviderFactory.cs</LastGenOutput>
+      <CustomToolNamespace>T4ProjectGenerator</CustomToolNamespace>
+    </None>
+    <None Include="Template\Common\Expr.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>Expr.cs</LastGenOutput>
+      <CustomToolNamespace>T4ProjectGenerator</CustomToolNamespace>
+    </None>
+    <None Include="Template\Common\IDbContextComponent.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>IDbContextComponent.cs</LastGenOutput>
+      <CustomToolNamespace>T4ProjectGenerator</CustomToolNamespace>
+    </None>
+    <None Include="Template\Common\MsSqlAccessBase.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MsSqlAccessBase.cs</LastGenOutput>
+      <CustomToolNamespace>T4ProjectGenerator</CustomToolNamespace>
+    </None>
+    <None Include="Template\Common\MsSqlConfig.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MsSqlConfig.cs</LastGenOutput>
+      <CustomToolNamespace>T4ProjectGenerator</CustomToolNamespace>
+    </None>
+    <None Include="Template\Common\ConfigManager.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ConfigManager.cs</LastGenOutput>
+      <CustomToolNamespace>T4ProjectGenerator</CustomToolNamespace>
+    </None>
+    <None Include="Template\Common\ServiceContextBase.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ServiceContextBase.cs</LastGenOutput>
+      <CustomToolNamespace>T4ProjectGenerator</CustomToolNamespace>
+    </None>
+    <None Include="Template\Core\Base.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>Base.cs</LastGenOutput>
+      <CustomToolNamespace>T4ProjectGenerator</CustomToolNamespace>
+    </None>
+    <None Include="Template\DAL\ManagerDevelopTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ManagerDevelopTemplate.cs</LastGenOutput>
+      <CustomToolNamespace>T4ProjectGenerator</CustomToolNamespace>
+    </None>
+    <None Include="Template\DAL\ManagerTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ManagerTemplate.cs</LastGenOutput>
+      <CustomToolNamespace>T4ProjectGenerator</CustomToolNamespace>
+    </None>
+    <None Include="Template\Model\ModelTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ModelTemplate.cs</LastGenOutput>
+      <CustomToolNamespace>T4ProjectGenerator</CustomToolNamespace>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CodeGenArea\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
