@@ -18,7 +18,7 @@ namespace T4ProjectGenerator
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\Common\Expr.tt"
+    #line 1 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\Common\Expr.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "12.0.0.0")]
     public partial class Expr : Base
     {
@@ -31,7 +31,7 @@ namespace T4ProjectGenerator
             this.Write("using Dapper;\r\nusing System;\r\nusing System.Collections.Generic;\r\nusing System.Lin" +
                     "q.Expressions;\r\nusing System.Reflection;\r\nusing System.Text;\r\n\r\nnamespace ");
             
-            #line 13 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\Common\Expr.tt"
+            #line 13 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\Common\Expr.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Config.CommonNamespace));
             
             #line default
@@ -154,75 +154,75 @@ namespace T4ProjectGenerator
                     "e(DynamicParameters parameters)\r\n        {\r\n            if (parameters == null)\r" +
                     "\n            {\r\n                throw new ArgumentNullException(\"parameters\", \"操" +
                     "作参数容器不能为空\");\r\n            }\r\n            StringBuilder builder = new StringBuild" +
-                    "er();\r\n            builder.Append(this.Name + \" IN (\");\r\n            for (int i " +
-                    "= 0; i < Values.Length; i++)\r\n            {\r\n                parameters.Add(\"@\" " +
-                    "+ this.Name + i, Values[i]);\r\n                builder.Append(\"@\" + this.Name + i" +
-                    ");\r\n                if (i + 1 < Values.Length)\r\n                {\r\n             " +
-                    "       builder.Append(\", \");\r\n                }\r\n            }\r\n            buil" +
-                    "der.Append(\")\");\r\n            return builder.ToString();\r\n        }\r\n    }\r\n\r\n  " +
-                    "  internal class LessThanEqualExpr : Expr\r\n    {\r\n        public LessThanEqualEx" +
-                    "pr(string name, object value)\r\n        {\r\n            this.Name = name;\r\n       " +
-                    "     this.Value = value;\r\n            this.Join = \"<=\";\r\n        }\r\n    }\r\n\r\n   " +
-                    " internal class LessThanExpr : Expr\r\n    {\r\n        public LessThanExpr(string n" +
-                    "ame, object value)\r\n        {\r\n            this.Name = name;\r\n            this.V" +
-                    "alue = value;\r\n            this.Join = \"<\";\r\n        }\r\n    }\r\n\r\n    internal cl" +
-                    "ass LikeExpr : Expr\r\n    {\r\n        public LikeExpr(string name, object value)\r\n" +
-                    "        {\r\n            this.Name = name;\r\n            this.Value = value;\r\n     " +
-                    "       this.Join = \"LIKE\";\r\n        }\r\n    }\r\n\r\n    internal class NotEqualExpr " +
-                    ": Expr\r\n    {\r\n        public NotEqualExpr(string name, object value)\r\n        {" +
-                    "\r\n            this.Name = name;\r\n            this.Value = value;\r\n            th" +
-                    "is.Join = \"<>\";\r\n        }\r\n    }\r\n\r\n    internal class NotInExpr : Expr\r\n    {\r" +
-                    "\n        protected object[] Values { get; set; }\r\n        public NotInExpr(strin" +
-                    "g name, params object[] values)\r\n        {\r\n            this.Name = name;\r\n     " +
-                    "       this.Values = values;\r\n            this.Join = \"NOT IN\";\r\n        }\r\n\r\n  " +
-                    "      public override string ToWhere(DynamicParameters parameters)\r\n        {\r\n " +
-                    "           if (parameters == null)\r\n            {\r\n                throw new Arg" +
-                    "umentNullException(\"parameters\", \"操作参数容器不能为空\");\r\n            }\r\n            Stri" +
-                    "ngBuilder builder = new StringBuilder();\r\n            builder.Append(this.Name +" +
-                    " \" NOT IN (\");\r\n            for (int i = 0; i < Values.Length; i++)\r\n           " +
-                    " {\r\n                parameters.Add(\"@\" + this.Name + i, Values[i]);\r\n           " +
-                    "     builder.Append(\"@\" + this.Name + i);\r\n                if (i + 1 < Values.Le" +
-                    "ngth)\r\n                {\r\n                    builder.Append(\", \");\r\n           " +
-                    "     }\r\n            }\r\n            builder.Append(\")\");\r\n            return buil" +
-                    "der.ToString();\r\n        }\r\n    }\r\n\r\n    internal class NotLikeExpr : Expr\r\n    " +
-                    "{\r\n        public NotLikeExpr(string name, object value)\r\n        {\r\n           " +
-                    " this.Name = name;\r\n            this.Value = value;\r\n            this.Join = \"NO" +
-                    "T LIKE\";\r\n        }\r\n    }\r\n\r\n    internal class OrderByCollection : OrderByExpr" +
-                    "\r\n    {\r\n        protected IList<OrderByExpr> OrderByList { get; set; }\r\n\r\n     " +
-                    "   public OrderByCollection(params OrderByExpr[] exprs)\r\n            : base(null" +
-                    ", null)\r\n        {\r\n            this.OrderByList = new List<OrderByExpr>(exprs);" +
-                    "\r\n        }\r\n\r\n        public override string ToOrderBy()\r\n        {\r\n          " +
-                    "  StringBuilder builder = new StringBuilder();\r\n            for (int i = 0; i < " +
-                    "OrderByList.Count; i++)\r\n            {\r\n                builder.Append(OrderByLi" +
-                    "st[i].ToOrderBy());\r\n                if (i < OrderByList.Count - 1)\r\n           " +
-                    "     {\r\n                    builder.Append(\", \");\r\n                }\r\n          " +
-                    "  }\r\n            return builder.ToString();\r\n        }\r\n    }\r\n\r\n    public abst" +
-                    "ract class OrderByExpr\r\n    {\r\n        protected string Name { get; set; }\r\n    " +
-                    "    protected string OrderBy { get; set; }\r\n\r\n        public OrderByExpr(string " +
-                    "name, string orderBy)\r\n        {\r\n            this.Name = name;\r\n            thi" +
-                    "s.OrderBy = orderBy;\r\n        }\r\n\r\n        public virtual string ToOrderBy()\r\n  " +
-                    "      {\r\n            return this.Name + \" \" + this.OrderBy;\r\n        }\r\n\r\n      " +
-                    "  public static OrderByExpr Asc<TSource, TResult>(Expression<Func<TSource, TResu" +
-                    "lt>> exprName)\r\n        {\r\n            string name = GetExprName(exprName);\r\n   " +
-                    "         return new AscExpr(name);\r\n        }\r\n\r\n        public static OrderByEx" +
-                    "pr Desc<TSource, TResult>(Expression<Func<TSource, TResult>> exprName)\r\n        " +
-                    "{\r\n            string name = GetExprName(exprName);\r\n            return new Desc" +
-                    "Expr(name);\r\n        }\r\n\r\n        public static OrderByExpr Asc(string name)\r\n  " +
-                    "      {\r\n            return new AscExpr(name);\r\n        }\r\n\r\n        public stat" +
-                    "ic OrderByExpr Desc(string name)\r\n        {\r\n            return new DescExpr(nam" +
-                    "e);\r\n        }\r\n\r\n        public static OrderByExpr OrderByJoin(params OrderByEx" +
-                    "pr[] exprs)\r\n        {\r\n            if (exprs == null)\r\n            {\r\n         " +
-                    "       throw new ArgumentNullException(\"exprs\", \"表达式不能为空\");\r\n            }\r\n    " +
-                    "        return new OrderByCollection(exprs);\r\n        }\r\n\r\n        private stati" +
-                    "c string GetExprName<TSource, TResult>(Expression<Func<TSource, TResult>> exprNa" +
-                    "me)\r\n        {\r\n            MemberExpression memberExpr = exprName.Body as Membe" +
-                    "rExpression;\r\n            if (memberExpr == null)\r\n            {\r\n              " +
-                    "  throw new ArgumentNullException(\"exprName\", \"表达式不正确\");\r\n            }\r\n       " +
-                    "     PropertyInfo property = memberExpr.Member as PropertyInfo;\r\n            if " +
-                    "(property == null)\r\n            {\r\n                throw new ArgumentNullExcepti" +
-                    "on(\"property\", \"表达式不正确\");\r\n            }\r\n            return property.Name;\r\n   " +
-                    "     }\r\n    }\r\n\r\n    internal class OrExpr : ExprCollection\r\n    {\r\n        publ" +
-                    "ic OrExpr(params Expr[] exprs) : base(\"OR\", exprs) { }\r\n    }\r\n}\r\n");
+                    "er();\r\n            builder.Append(\" \" + this.Name + \" IN (\");\r\n            for (" +
+                    "int i = 0; i < Values.Length; i++)\r\n            {\r\n                parameters.Ad" +
+                    "d(\"@\" + this.Name + i, Values[i]);\r\n                builder.Append(\"@\" + this.Na" +
+                    "me + i);\r\n                if (i + 1 < Values.Length)\r\n                {\r\n       " +
+                    "             builder.Append(\", \");\r\n                }\r\n            }\r\n          " +
+                    "  builder.Append(\")\");\r\n            return builder.ToString();\r\n        }\r\n    }" +
+                    "\r\n\r\n    internal class LessThanEqualExpr : Expr\r\n    {\r\n        public LessThanE" +
+                    "qualExpr(string name, object value)\r\n        {\r\n            this.Name = name;\r\n " +
+                    "           this.Value = value;\r\n            this.Join = \"<=\";\r\n        }\r\n    }\r" +
+                    "\n\r\n    internal class LessThanExpr : Expr\r\n    {\r\n        public LessThanExpr(st" +
+                    "ring name, object value)\r\n        {\r\n            this.Name = name;\r\n            " +
+                    "this.Value = value;\r\n            this.Join = \"<\";\r\n        }\r\n    }\r\n\r\n    inter" +
+                    "nal class LikeExpr : Expr\r\n    {\r\n        public LikeExpr(string name, object va" +
+                    "lue)\r\n        {\r\n            this.Name = name;\r\n            this.Value = value;\r" +
+                    "\n            this.Join = \"LIKE\";\r\n        }\r\n    }\r\n\r\n    internal class NotEqua" +
+                    "lExpr : Expr\r\n    {\r\n        public NotEqualExpr(string name, object value)\r\n   " +
+                    "     {\r\n            this.Name = name;\r\n            this.Value = value;\r\n        " +
+                    "    this.Join = \"<>\";\r\n        }\r\n    }\r\n\r\n    internal class NotInExpr : Expr\r\n" +
+                    "    {\r\n        protected object[] Values { get; set; }\r\n        public NotInExpr" +
+                    "(string name, params object[] values)\r\n        {\r\n            this.Name = name;\r" +
+                    "\n            this.Values = values;\r\n            this.Join = \"NOT IN\";\r\n        }" +
+                    "\r\n\r\n        public override string ToWhere(DynamicParameters parameters)\r\n      " +
+                    "  {\r\n            if (parameters == null)\r\n            {\r\n                throw n" +
+                    "ew ArgumentNullException(\"parameters\", \"操作参数容器不能为空\");\r\n            }\r\n          " +
+                    "  StringBuilder builder = new StringBuilder();\r\n            builder.Append(\" \" +" +
+                    " this.Name + \" NOT IN (\");\r\n            for (int i = 0; i < Values.Length; i++)\r" +
+                    "\n            {\r\n                parameters.Add(\"@\" + this.Name + i, Values[i]);\r" +
+                    "\n                builder.Append(\"@\" + this.Name + i);\r\n                if (i + 1" +
+                    " < Values.Length)\r\n                {\r\n                    builder.Append(\", \");\r" +
+                    "\n                }\r\n            }\r\n            builder.Append(\")\");\r\n           " +
+                    " return builder.ToString();\r\n        }\r\n    }\r\n\r\n    internal class NotLikeExpr " +
+                    ": Expr\r\n    {\r\n        public NotLikeExpr(string name, object value)\r\n        {\r" +
+                    "\n            this.Name = name;\r\n            this.Value = value;\r\n            thi" +
+                    "s.Join = \"NOT LIKE\";\r\n        }\r\n    }\r\n\r\n    internal class OrderByCollection :" +
+                    " OrderByExpr\r\n    {\r\n        protected IList<OrderByExpr> OrderByList { get; set" +
+                    "; }\r\n\r\n        public OrderByCollection(params OrderByExpr[] exprs)\r\n           " +
+                    " : base(null, null)\r\n        {\r\n            this.OrderByList = new List<OrderByE" +
+                    "xpr>(exprs);\r\n        }\r\n\r\n        public override string ToOrderBy()\r\n        {" +
+                    "\r\n            StringBuilder builder = new StringBuilder();\r\n            for (int" +
+                    " i = 0; i < OrderByList.Count; i++)\r\n            {\r\n                builder.Appe" +
+                    "nd(OrderByList[i].ToOrderBy());\r\n                if (i < OrderByList.Count - 1)\r" +
+                    "\n                {\r\n                    builder.Append(\", \");\r\n                }" +
+                    "\r\n            }\r\n            return builder.ToString();\r\n        }\r\n    }\r\n\r\n   " +
+                    " public abstract class OrderByExpr\r\n    {\r\n        protected string Name { get; " +
+                    "set; }\r\n        protected string OrderBy { get; set; }\r\n\r\n        public OrderBy" +
+                    "Expr(string name, string orderBy)\r\n        {\r\n            this.Name = name;\r\n   " +
+                    "         this.OrderBy = orderBy;\r\n        }\r\n\r\n        public virtual string ToO" +
+                    "rderBy()\r\n        {\r\n            return this.Name + \" \" + this.OrderBy;\r\n       " +
+                    " }\r\n\r\n        public static OrderByExpr Asc<TSource, TResult>(Expression<Func<TS" +
+                    "ource, TResult>> exprName)\r\n        {\r\n            string name = GetExprName(exp" +
+                    "rName);\r\n            return new AscExpr(name);\r\n        }\r\n\r\n        public stat" +
+                    "ic OrderByExpr Desc<TSource, TResult>(Expression<Func<TSource, TResult>> exprNam" +
+                    "e)\r\n        {\r\n            string name = GetExprName(exprName);\r\n            ret" +
+                    "urn new DescExpr(name);\r\n        }\r\n\r\n        public static OrderByExpr Asc(stri" +
+                    "ng name)\r\n        {\r\n            return new AscExpr(name);\r\n        }\r\n\r\n       " +
+                    " public static OrderByExpr Desc(string name)\r\n        {\r\n            return new " +
+                    "DescExpr(name);\r\n        }\r\n\r\n        public static OrderByExpr OrderByJoin(para" +
+                    "ms OrderByExpr[] exprs)\r\n        {\r\n            if (exprs == null)\r\n            " +
+                    "{\r\n                throw new ArgumentNullException(\"exprs\", \"表达式不能为空\");\r\n       " +
+                    "     }\r\n            return new OrderByCollection(exprs);\r\n        }\r\n\r\n        p" +
+                    "rivate static string GetExprName<TSource, TResult>(Expression<Func<TSource, TRes" +
+                    "ult>> exprName)\r\n        {\r\n            MemberExpression memberExpr = exprName.B" +
+                    "ody as MemberExpression;\r\n            if (memberExpr == null)\r\n            {\r\n  " +
+                    "              throw new ArgumentNullException(\"exprName\", \"表达式不正确\");\r\n          " +
+                    "  }\r\n            PropertyInfo property = memberExpr.Member as PropertyInfo;\r\n   " +
+                    "         if (property == null)\r\n            {\r\n                throw new Argumen" +
+                    "tNullException(\"property\", \"表达式不正确\");\r\n            }\r\n            return propert" +
+                    "y.Name;\r\n        }\r\n    }\r\n\r\n    internal class OrExpr : ExprCollection\r\n    {\r\n" +
+                    "        public OrExpr(params Expr[] exprs) : base(\"OR\", exprs) { }\r\n    }\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }
