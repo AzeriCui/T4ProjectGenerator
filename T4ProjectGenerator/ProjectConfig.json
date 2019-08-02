@@ -1,27 +1,30 @@
 ﻿[
   {
     "Name": "WY.Sundry",
-    "CodeGenAreaDir": "E:\\zy\\T4\\T4ProjectGenerator\\T4ProjectGenerator\\CodeGenArea\\",
+    "CodeGenAreaDir": "E:\\zy\\T4\\T4\\T4ProjectGenerator\\T4ProjectGenerator\\CodeGenArea\\",
     "ConnectionString": "data source=.;initial catalog=wy_gmms;user id=sa;password=Windows2008;",
     "SelectWhere": " WHERE obj.name  <> 'sysdiagrams' ",
+
     "CommonNamespace": "Common",
     "CommonDir": "\\Common\\",
+
     "ModelNamespace": "Model",
     "ModelDir": "\\Model\\",
     "ModelClassSuffix": "Model",
     "ModelFileSuffix": "Model",
+
     "ManagerNamespace": "DAL",
-    "ManagerDir": "\\DAL\\Partial\\",
+    "ManagerDir": "\\DAL\\",
     "ManagerClassSuffix": "DAL",
     "ManagerFileSuffix": "DAL",
-    "ManagerDevelopDir": "\\DAL\\",
+
     "ServiceNamespace": "BLL",
-    "ServiceDir": "\\BLL\\Partial\\",
+    "ServiceDir": "\\BLL\\Service\\",
     "ServiceClassSuffix": "BLL",
     "ServiceFileSuffix": "BLL",
-    "ServiceDevelopDir": "\\BLL\\Service\\",
+
     "ContextNamespace": "BLL",
-    "ContextDir": "\\BLL\\Partial\\",
+    "ContextDir": "\\BLL\\Service\\",
     "ContextClassPrefix": "Sundry",
     "ContextFilePrefix": "Sundry",
     "ContextConnectionStringKey": "SundryContext"

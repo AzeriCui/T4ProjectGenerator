@@ -10,105 +10,79 @@ using <#=        Config.CommonNamespace #>;
 
 namespace <#=        Config.ContextNamespace #>
 {
-    public partial class <#=        Config.ContextClassPrefix #>ContextWrapper : DbProviderFactory, IDisposable
+    public partial class <#=        Config.ContextClassPrefix #>Context : DbProviderFactory
     {
-        #region Context
-        internal class <#=        Config.ContextClassPrefix #>Context : IDbContextComponent
+        private Lazy<IDbContextComponent> _Context;
+
+        protected override IDbContextComponent Context
         {
-            public IDbConnection Connection { get; private set; }
-
-            public IDbTransaction Transaction { get; set; }
-
-            public <#=        Config.ContextClassPrefix #>Context(string connectionString)
-            {
-                this.Connection = new SqlConnection(connectionString);
-                if (this.Connection.State != ConnectionState.Open)
-                {
-                    this.Connection.Open();
-                }
-            }
+            get { return _Context.Value; }
         }
 
-        protected override IDbContextComponent Context { get; set; }
-        private bool _Disposed = false;
-
-        public <#=        Config.ContextClassPrefix #>ContextWrapper()
+        public <#=        Config.ContextClassPrefix #>Context()
+            : base()
         {
-            string connectionString = ConfigManager.GetValue("<#=        Config.ContextConnectionStringKey #>");
-            Context = new <#=        Config.ContextClassPrefix #>Context(connectionString);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this._Disposed)
-            {
+            _Context = new Lazy<IDbContextComponent>(() => new <#=        Config.ContextClassPrefix #>ContextWrapper());
 <#
     foreach(DataSchema item in _ColumnList)
     {
 
 #>
-                if (this._Client<#=            item.TableName #> != null)
-                {
-                    this._Client<#=            item.TableName #> = null;
-                }
+            _Client<#=            item.TableName #> = new Lazy<<#=            item.TableName #><#=            Config.ServiceClassSuffix #>>(() => new <#=            item.TableName #><#=            Config.ServiceClassSuffix #>(Context));
 <#
     }
 
  #>
-                if (disposing)
-                {
-                    if (IsBeginTrans)
-                    {
-                        Rollback();
-                    }
-                    if (Context.Transaction != null)
-                    {
-                        Context.Transaction.Dispose();
-                        Context.Transaction = null;
-                    }
-                    if (Context.Connection != null)
-                    {
-                        Context.Connection.Close();
-                        Context.Connection.Dispose();
-                    }
-                }
-            }
-            this._Disposed = true;
         }
 
-        public void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        #endregion
-
-        #region Client属性
 <#
     foreach(DataSchema item in _ColumnList)
     {
 
 #>
-        private <#=            item.TableName #><#=            Config.ServiceClassSuffix #> _Client<#=            item.TableName #> = null;
+        private Lazy<<#=            item.TableName #><#=            Config.ServiceClassSuffix #>> _Client<#=            item.TableName #> = null;
         /// <summary>
         /// <#=            item.TableDescription #>
         /// </summary>
         public <#=            item.TableName #><#=            Config.ServiceClassSuffix #> Client<#=            item.TableName #>
         {
-            get
-            {
-                if (this._Client<#=            item.TableName #> == null)
-                {
-                    this._Client<#=            item.TableName #> = new <#=            item.TableName #><#=            Config.ServiceClassSuffix #>(this.Context);
-                }
-                return _Client<#=            item.TableName #>;
-            }
+            get { return _Client<#=            item.TableName #>.Value; }
         }
 
 <#
     }
 
  #>
-        #endregion
+    }
+
+    internal class <#=        Config.ContextClassPrefix #>ContextWrapper : IDbContextComponent
+    {
+        public IDbConnection Connection { get; set; }
+
+        public IDbTransaction Transaction { get; set; }
+
+        public <#=        Config.ContextClassPrefix #>ContextWrapper()
+        {
+            this.Connection = new SqlConnection(ConfigManager.GetValue("<#=        Config.ContextConnectionStringKey #>"));
+            if (this.Connection.State != ConnectionState.Open)
+            {
+                this.Connection.Open();
+            }
+        }
+
+        public void Dispose()
+        {
+            if (this.Transaction != null)
+            {
+                this.Transaction.Dispose();
+                this.Transaction = null;
+            }
+            if (this.Connection != null)
+            {
+                this.Connection.Close();
+                this.Connection.Dispose();
+                this.Connection = null;
+            }
+        }
     }
 }

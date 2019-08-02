@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace T4ProjectGenerator
 {
+    [Service]
     public partial class ModelTemplate
     {
 

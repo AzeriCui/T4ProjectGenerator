@@ -18,7 +18,7 @@ namespace T4ProjectGenerator
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ServiceTemplate.tt"
+    #line 1 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ServiceTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "12.0.0.0")]
     public partial class ServiceTemplate : Base
     {
@@ -28,100 +28,82 @@ namespace T4ProjectGenerator
         /// </summary>
         public override string TransformText()
         {
-            this.Write("using System;\r\nusing System.Collections.Generic;\r\nusing System.Linq;\r\nusing ");
+            this.Write("using System;\r\nusing System.Collections.Generic;\r\nusing System.Linq;\r\nusing Syste" +
+                    "m.Text;\r\n\r\nusing ");
             
-            #line 9 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ServiceTemplate.tt"
+            #line 11 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Config.CommonNamespace));
             
             #line default
             #line hidden
             this.Write(";\r\nusing ");
             
-            #line 10 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ServiceTemplate.tt"
+            #line 12 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Config.ModelNamespace));
+            
+            #line default
+            #line hidden
+            this.Write(";\r\nusing ");
+            
+            #line 13 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Config.ManagerNamespace));
             
             #line default
             #line hidden
             this.Write(";\r\n\r\nnamespace ");
             
-            #line 12 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ServiceTemplate.tt"
+            #line 15 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Config.ServiceNamespace));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n    /// <summary>\r\n    /// ");
             
-            #line 15 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ServiceTemplate.tt"
+            #line 18 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_ColumnList.FirstOrDefault().TableDescription));
             
             #line default
             #line hidden
             this.Write("\r\n    /// </summary>\r\n    public partial class ");
             
-            #line 17 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ServiceTemplate.tt"
+            #line 20 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_TableName));
             
             #line default
             #line hidden
             
-            #line 17 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ServiceTemplate.tt"
+            #line 20 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Config.ServiceClassSuffix));
             
             #line default
             #line hidden
-            this.Write(" : ServiceContextBase<");
+            this.Write(" : ServiceContextBase\r\n    {\r\n        public ");
             
-            #line 17 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ServiceTemplate.tt"
+            #line 22 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_TableName));
             
             #line default
             #line hidden
             
-            #line 17 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Config.ManagerClassSuffix));
-            
-            #line default
-            #line hidden
-            this.Write(">\r\n    {\r\n        protected override ");
-            
-            #line 19 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(_TableName));
-            
-            #line default
-            #line hidden
-            
-            #line 19 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Config.ManagerClassSuffix));
-            
-            #line default
-            #line hidden
-            this.Write(" Manager { get; set; }\r\n\r\n        public ");
-            
-            #line 21 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(_TableName));
-            
-            #line default
-            #line hidden
-            
-            #line 21 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ServiceTemplate.tt"
+            #line 22 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Config.ServiceClassSuffix));
             
             #line default
             #line hidden
             this.Write("(IDbContextComponent context)\r\n        {\r\n            this.Manager = new ");
             
-            #line 23 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ServiceTemplate.tt"
+            #line 24 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_TableName));
             
             #line default
             #line hidden
             
-            #line 23 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ServiceTemplate.tt"
+            #line 24 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Config.ManagerClassSuffix));
             
             #line default
             #line hidden
-            this.Write("(context);\r\n        }\r\n\r\n    }\r\n}");
+            this.Write("(context);\r\n        }\r\n\r\n\r\n\r\n\r\n\r\n\r\n    }\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

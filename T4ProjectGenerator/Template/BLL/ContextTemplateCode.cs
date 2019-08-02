@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace T4ProjectGenerator
 {
+    [Context]
     public partial class ContextTemplate
     {
 
@@ -17,7 +18,7 @@ namespace T4ProjectGenerator
         {
             _ColumnList = columnList;
 
-            this.FileName = string.Format("{0}{1}{2}{3}ContextWrapper.cs",
+            this.FileName = string.Format("{0}{1}{2}{3}Context.cs",
                 config.CodeGenAreaDir, config.Name, config.ContextDir, config.ContextFilePrefix);
         }
 

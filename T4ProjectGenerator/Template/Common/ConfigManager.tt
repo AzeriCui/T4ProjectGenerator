@@ -38,7 +38,7 @@ namespace <#=        Config.CommonNamespace #>
             {
                 if (throwException)
                 {
-                    throw new KeyNotFoundException("AppSettings[\"" + key + "\"] not found");
+                    throw new KeyNotFoundException("配置[" + key + "]不存在");
                 }
                 return defaultValue;
             }

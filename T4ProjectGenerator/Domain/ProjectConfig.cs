@@ -69,10 +69,10 @@ namespace T4ProjectGenerator
         /// manager 文件后缀
         /// </summary>
         public string ManagerFileSuffix { get; set; }
-        /// <summary>
-        /// manager 开发块相对目录
-        /// </summary>
-        public string ManagerDevelopDir { get; set; }
+        ///// <summary>
+        ///// manager 开发块相对目录
+        ///// </summary>
+        //public string ManagerDevelopDir { get; set; }
 
 
         /// <summary>
@@ -91,10 +91,10 @@ namespace T4ProjectGenerator
         /// service 文件后缀
         /// </summary>
         public string ServiceFileSuffix { get; set; }
-        /// <summary>
-        /// service 开发块相对目录
-        /// </summary>
-        public string ServiceDevelopDir { get; set; }
+        ///// <summary>
+        ///// service 开发块相对目录
+        ///// </summary>
+        //public string ServiceDevelopDir { get; set; }
 
 
         /// <summary>
@@ -117,6 +117,8 @@ namespace T4ProjectGenerator
         /// context 连接字符串KEY
         /// </summary>
         public string ContextConnectionStringKey { get; set; }
+
+
 
 
     }

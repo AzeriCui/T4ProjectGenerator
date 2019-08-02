@@ -1,0 +1,4 @@
+/T4ProjectGenerator/bin
+/T4ProjectGenerator/obj
+*.suo
+*.user

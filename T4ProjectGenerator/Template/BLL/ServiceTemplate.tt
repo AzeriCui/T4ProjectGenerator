@@ -6,7 +6,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+
 using <#=        Config.CommonNamespace #>;
+using <#=        Config.ModelNamespace #>;
 using <#=        Config.ManagerNamespace #>;
 
 namespace <#=        Config.ServiceNamespace #>
@@ -14,14 +17,17 @@ namespace <#=        Config.ServiceNamespace #>
     /// <summary>
     /// <#=        _ColumnList.FirstOrDefault().TableDescription #>
     /// </summary>
-    public partial class <#=        _TableName #><#=        Config.ServiceClassSuffix #> : ServiceContextBase<<#=        _TableName #><#=        Config.ManagerClassSuffix #>>
+    public partial class <#=        _TableName #><#=        Config.ServiceClassSuffix #> : ServiceContextBase
     {
-        protected override <#=        _TableName #><#=        Config.ManagerClassSuffix #> Manager { get; set; }
-
         public <#=        _TableName #><#=        Config.ServiceClassSuffix #>(IDbContextComponent context)
         {
             this.Manager = new <#=        _TableName #><#=        Config.ManagerClassSuffix #>(context);
         }
+
+
+
+
+
 
     }
 }

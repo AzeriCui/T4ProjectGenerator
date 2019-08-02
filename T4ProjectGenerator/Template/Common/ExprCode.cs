@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace T4ProjectGenerator
 {
+    [Common]
     public partial class Expr
     {
         public Expr(ProjectConfig config)

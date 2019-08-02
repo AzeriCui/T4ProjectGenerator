@@ -289,8 +289,17 @@ namespace <#=        Config.CommonNamespace #>
         public InExpr(string name, params object[] values)
         {
             this.Name = name;
-            this.Values = values;
+            this.Values = ConvertArray(values);
             this.Join = "IN";
+        }
+
+        private object[] ConvertArray(object[] values)
+        {
+            if (values != null && values.Length == 1 && values[0] is Array)
+            {
+                values = (object[])System.Collections.ArrayList.Adapter((Array)values[0]).ToArray();
+            }
+            return values;
         }
 
         public override string ToWhere(DynamicParameters parameters)
@@ -361,8 +370,17 @@ namespace <#=        Config.CommonNamespace #>
         public NotInExpr(string name, params object[] values)
         {
             this.Name = name;
-            this.Values = values;
+            this.Values = ConvertArray(values);
             this.Join = "NOT IN";
+        }
+
+        private object[] ConvertArray(object[] values)
+        {
+            if (values != null && values.Length == 1 && values[0] is Array)
+            {
+                values = (object[])System.Collections.ArrayList.Adapter((Array)values[0]).ToArray();
+            }
+            return values;
         }
 
         public override string ToWhere(DynamicParameters parameters)

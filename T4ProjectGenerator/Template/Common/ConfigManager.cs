@@ -18,7 +18,7 @@ namespace T4ProjectGenerator
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\Common\ConfigManager.tt"
+    #line 1 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\Common\ConfigManager.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "12.0.0.0")]
     public partial class ConfigManager : Base
     {
@@ -31,7 +31,7 @@ namespace T4ProjectGenerator
             this.Write("using System;\r\nusing System.Collections.Generic;\r\nusing System.Configuration;\r\n\r\n" +
                     "namespace ");
             
-            #line 10 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\Common\ConfigManager.tt"
+            #line 10 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\Common\ConfigManager.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Config.CommonNamespace));
             
             #line default
@@ -47,16 +47,15 @@ namespace T4ProjectGenerator
                     "tic TSource GetValue<TSource>(string key, TSource defaultValue, bool throwExcept" +
                     "ion)\r\n        {\r\n            var value = ConfigurationManager.AppSettings[key];\r" +
                     "\n            if (value == null)\r\n            {\r\n                if (throwExcepti" +
-                    "on)\r\n                {\r\n                    throw new KeyNotFoundException(\"AppS" +
-                    "ettings[\\\"\" + key + \"\\\"] not found\");\r\n                }\r\n                return" +
-                    " defaultValue;\r\n            }\r\n            try\r\n            {\r\n                i" +
-                    "f (typeof(Enum).IsAssignableFrom(typeof(TSource)))\r\n                {\r\n         " +
-                    "           return (TSource)Enum.Parse(typeof(TSource), value);\r\n                " +
-                    "}\r\n                return (TSource)Convert.ChangeType(value, typeof(TSource));\r\n" +
-                    "            }\r\n            catch (Exception ex)\r\n            {\r\n                " +
-                    "if (throwException)\r\n                {\r\n                    throw ex;\r\n         " +
-                    "       }\r\n                return defaultValue;\r\n            }\r\n        }\r\n    }\r" +
-                    "\n}");
+                    "on)\r\n                {\r\n                    throw new KeyNotFoundException(\"配置[\"" +
+                    " + key + \"]不存在\");\r\n                }\r\n                return defaultValue;\r\n    " +
+                    "        }\r\n            try\r\n            {\r\n                if (typeof(Enum).IsAs" +
+                    "signableFrom(typeof(TSource)))\r\n                {\r\n                    return (T" +
+                    "Source)Enum.Parse(typeof(TSource), value);\r\n                }\r\n                r" +
+                    "eturn (TSource)Convert.ChangeType(value, typeof(TSource));\r\n            }\r\n     " +
+                    "       catch (Exception ex)\r\n            {\r\n                if (throwException)\r" +
+                    "\n                {\r\n                    throw ex;\r\n                }\r\n          " +
+                    "      return defaultValue;\r\n            }\r\n        }\r\n    }\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

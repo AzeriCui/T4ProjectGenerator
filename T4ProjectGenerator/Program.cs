@@ -1,10 +1,5 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using System.Threading;
 
 namespace T4ProjectGenerator
 {
@@ -12,15 +7,11 @@ namespace T4ProjectGenerator
     {
         static void Main(string[] args)
         {
-            string configString = File.ReadAllText("ProjectConfig.json");
-            List<ProjectConfig> collection = JsonConvert.DeserializeObject<List<ProjectConfig>>(configString);
-            foreach (ProjectConfig item in collection)
-            {
-                CommonBuilder builder = new CommonBuilder(item);
-                builder.Run();
-            }
+            CommonBuilder builder = new CommonBuilder();
+            builder.Run();
 
             Console.WriteLine("OK");
+            Thread.Sleep(2000);
         }
     }
 }

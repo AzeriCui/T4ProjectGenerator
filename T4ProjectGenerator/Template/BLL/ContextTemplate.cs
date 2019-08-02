@@ -18,7 +18,7 @@ namespace T4ProjectGenerator
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
+    #line 1 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "12.0.0.0")]
     public partial class ContextTemplate : Base
     {
@@ -30,81 +30,45 @@ namespace T4ProjectGenerator
         {
             this.Write("using System;\r\nusing System.Data;\r\nusing System.Data.SqlClient;\r\nusing ");
             
-            #line 9 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
+            #line 9 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Config.CommonNamespace));
             
             #line default
             #line hidden
             this.Write(";\r\n\r\nnamespace ");
             
-            #line 11 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
+            #line 11 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Config.ContextNamespace));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n    public partial class ");
             
-            #line 13 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
+            #line 13 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Config.ContextClassPrefix));
             
             #line default
             #line hidden
-            this.Write("ContextWrapper : DbProviderFactory, IDisposable\r\n    {\r\n        #region Context\r\n" +
-                    "        internal class ");
+            this.Write("Context : DbProviderFactory\r\n    {\r\n        private Lazy<IDbContextComponent> _Co" +
+                    "ntext;\r\n\r\n        protected override IDbContextComponent Context\r\n        {\r\n   " +
+                    "         get { return _Context.Value; }\r\n        }\r\n\r\n        public ");
             
-            #line 16 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
+            #line 22 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Config.ContextClassPrefix));
             
             #line default
             #line hidden
-            this.Write("Context : IDbContextComponent\r\n        {\r\n            public IDbConnection Connec" +
-                    "tion { get; private set; }\r\n\r\n            public IDbTransaction Transaction { ge" +
-                    "t; set; }\r\n\r\n            public ");
+            this.Write("Context()\r\n            : base()\r\n        {\r\n            _Context = new Lazy<IDbCo" +
+                    "ntextComponent>(() => new ");
             
-            #line 22 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
+            #line 25 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Config.ContextClassPrefix));
             
             #line default
             #line hidden
-            this.Write(@"Context(string connectionString)
-            {
-                this.Connection = new SqlConnection(connectionString);
-                if (this.Connection.State != ConnectionState.Open)
-                {
-                    this.Connection.Open();
-                }
-            }
-        }
-
-        protected override IDbContextComponent Context { get; set; }
-        private bool _Disposed = false;
-
-        public ");
+            this.Write("ContextWrapper());\r\n");
             
-            #line 35 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Config.ContextClassPrefix));
-            
-            #line default
-            #line hidden
-            this.Write("ContextWrapper()\r\n        {\r\n            string connectionString = ConfigManager." +
-                    "GetValue(\"");
-            
-            #line 37 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Config.ContextConnectionStringKey));
-            
-            #line default
-            #line hidden
-            this.Write("\");\r\n            Context = new ");
-            
-            #line 38 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Config.ContextClassPrefix));
-            
-            #line default
-            #line hidden
-            this.Write("Context(connectionString);\r\n        }\r\n\r\n        protected virtual void Dispose(b" +
-                    "ool disposing)\r\n        {\r\n            if (!this._Disposed)\r\n            {\r\n");
-            
-            #line 45 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
+            #line 26 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
 
     foreach(DataSchema item in _ColumnList)
     {
@@ -113,23 +77,42 @@ namespace T4ProjectGenerator
             
             #line default
             #line hidden
-            this.Write("                if (this._Client");
+            this.Write("            _Client");
             
-            #line 50 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
+            #line 31 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.TableName));
             
             #line default
             #line hidden
-            this.Write(" != null)\r\n                {\r\n                    this._Client");
+            this.Write(" = new Lazy<");
             
-            #line 52 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
+            #line 31 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.TableName));
             
             #line default
             #line hidden
-            this.Write(" = null;\r\n                }\r\n");
             
-            #line 54 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
+            #line 31 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Config.ServiceClassSuffix));
+            
+            #line default
+            #line hidden
+            this.Write(">(() => new ");
+            
+            #line 31 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.TableName));
+            
+            #line default
+            #line hidden
+            
+            #line 31 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Config.ServiceClassSuffix));
+            
+            #line default
+            #line hidden
+            this.Write("(Context));\r\n");
+            
+            #line 32 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
 
     }
 
@@ -137,38 +120,9 @@ namespace T4ProjectGenerator
             
             #line default
             #line hidden
-            this.Write(@"                if (disposing)
-                {
-                    if (IsBeginTrans)
-                    {
-                        Rollback();
-                    }
-                    if (Context.Transaction != null)
-                    {
-                        Context.Transaction.Dispose();
-                        Context.Transaction = null;
-                    }
-                    if (Context.Connection != null)
-                    {
-                        Context.Connection.Close();
-                        Context.Connection.Dispose();
-                    }
-                }
-            }
-            this._Disposed = true;
-        }
-
-        public void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        #endregion
-
-        #region Client属性
-");
+            this.Write("        }\r\n\r\n");
             
-            #line 87 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
+            #line 38 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
 
     foreach(DataSchema item in _ColumnList)
     {
@@ -177,90 +131,63 @@ namespace T4ProjectGenerator
             
             #line default
             #line hidden
-            this.Write("        private ");
+            this.Write("        private Lazy<");
             
-            #line 92 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
+            #line 43 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.TableName));
             
             #line default
             #line hidden
             
-            #line 92 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
+            #line 43 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Config.ServiceClassSuffix));
             
             #line default
             #line hidden
-            this.Write(" _Client");
+            this.Write("> _Client");
             
-            #line 92 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
+            #line 43 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.TableName));
             
             #line default
             #line hidden
             this.Write(" = null;\r\n        /// <summary>\r\n        /// ");
             
-            #line 94 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
+            #line 45 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.TableDescription));
             
             #line default
             #line hidden
             this.Write("\r\n        /// </summary>\r\n        public ");
             
-            #line 96 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
+            #line 47 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.TableName));
             
             #line default
             #line hidden
             
-            #line 96 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
+            #line 47 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Config.ServiceClassSuffix));
             
             #line default
             #line hidden
             this.Write(" Client");
             
-            #line 96 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
+            #line 47 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.TableName));
             
             #line default
             #line hidden
-            this.Write("\r\n        {\r\n            get\r\n            {\r\n                if (this._Client");
+            this.Write("\r\n        {\r\n            get { return _Client");
             
-            #line 100 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
+            #line 49 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.TableName));
             
             #line default
             #line hidden
-            this.Write(" == null)\r\n                {\r\n                    this._Client");
+            this.Write(".Value; }\r\n        }\r\n\r\n");
             
-            #line 102 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(item.TableName));
-            
-            #line default
-            #line hidden
-            this.Write(" = new ");
-            
-            #line 102 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(item.TableName));
-            
-            #line default
-            #line hidden
-            
-            #line 102 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Config.ServiceClassSuffix));
-            
-            #line default
-            #line hidden
-            this.Write("(this.Context);\r\n                }\r\n                return _Client");
-            
-            #line 104 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(item.TableName));
-            
-            #line default
-            #line hidden
-            this.Write(";\r\n            }\r\n        }\r\n\r\n");
-            
-            #line 108 "E:\zy\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
+            #line 52 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
 
     }
 
@@ -268,7 +195,53 @@ namespace T4ProjectGenerator
             
             #line default
             #line hidden
-            this.Write("        #endregion\r\n    }\r\n}");
+            this.Write("    }\r\n\r\n    internal class ");
+            
+            #line 58 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Config.ContextClassPrefix));
+            
+            #line default
+            #line hidden
+            this.Write("ContextWrapper : IDbContextComponent\r\n    {\r\n        public IDbConnection Connect" +
+                    "ion { get; set; }\r\n\r\n        public IDbTransaction Transaction { get; set; }\r\n\r\n" +
+                    "        public ");
+            
+            #line 64 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Config.ContextClassPrefix));
+            
+            #line default
+            #line hidden
+            this.Write("ContextWrapper()\r\n        {\r\n            this.Connection = new SqlConnection(Conf" +
+                    "igManager.GetValue(\"");
+            
+            #line 66 "E:\zy\T4\T4\T4ProjectGenerator\T4ProjectGenerator\Template\BLL\ContextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Config.ContextConnectionStringKey));
+            
+            #line default
+            #line hidden
+            this.Write(@"""));
+            if (this.Connection.State != ConnectionState.Open)
+            {
+                this.Connection.Open();
+            }
+        }
+
+        public void Dispose()
+        {
+            if (this.Transaction != null)
+            {
+                this.Transaction.Dispose();
+                this.Transaction = null;
+            }
+            if (this.Connection != null)
+            {
+                this.Connection.Close();
+                this.Connection.Dispose();
+                this.Connection = null;
+            }
+        }
+    }
+}");
             return this.GenerationEnvironment.ToString();
         }
     }
