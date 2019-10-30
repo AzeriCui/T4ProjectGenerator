@@ -1,4 +1,5 @@
 /T4ProjectGenerator/bin
 /T4ProjectGenerator/obj
+/T4ProjectGenerator/CodeGenArea
 *.suo
 *.user
