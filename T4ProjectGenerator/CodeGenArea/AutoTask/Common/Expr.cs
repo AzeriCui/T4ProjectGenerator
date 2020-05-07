@@ -1,0 +1,505 @@
+using Dapper;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Text;
+
+namespace AutoTask.Common
+{
+    public abstract class Expr
+    {
+        public Expr() { }
+
+        protected string Name { get; set; }
+        protected object Value { get; set; }
+        protected string Join { get; set; }
+
+        public virtual string ToWhere(DynamicParameters parameters)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters", "操作参数容器不能为空");
+            }
+            parameters.Add(this.Name, this.Value);
+            return string.Format(" {0} {1} @{0} ", this.Name, this.Join);
+        }
+
+        private static string GetExprName<TSource, TResult>(Expression<Func<TSource, TResult>> exprName)
+        {
+            MemberExpression memberExpr = exprName.Body as MemberExpression;
+            if (memberExpr == null)
+            {
+                throw new ArgumentNullException("exprName", "表达式不正确");
+            }
+            PropertyInfo property = memberExpr.Member as PropertyInfo;
+            if (property == null)
+            {
+                throw new ArgumentNullException("property", "表达式不正确");
+            }
+            return property.Name;
+        }
+
+        public static Expr And(params Expr[] exprs)
+        {
+            return new AndExpr(exprs);
+        }
+
+        public static Expr Or(params Expr[] exprs)
+        {
+            return new OrExpr(exprs);
+        }
+
+        public static Expr Equal<TSource, TResult>(Expression<Func<TSource, TResult>> exprName, object value)
+        {
+            string name = GetExprName<TSource, TResult>(exprName);
+            return new EqualExpr(name, value);
+        }
+
+        public static Expr NotEqual<TSource, TResult>(Expression<Func<TSource, TResult>> exprName, object value)
+        {
+            string name = GetExprName<TSource, TResult>(exprName);
+            return new NotEqualExpr(name, value);
+        }
+
+        public static Expr Like<TSource, TResult>(Expression<Func<TSource, TResult>> exprName, object value)
+        {
+            string name = GetExprName<TSource, TResult>(exprName);
+            return new LikeExpr(name, value);
+        }
+
+        public static Expr NotLike<TSource, TResult>(Expression<Func<TSource, TResult>> exprName, object value)
+        {
+            string name = GetExprName<TSource, TResult>(exprName);
+            return new NotLikeExpr(name, value);
+        }
+
+        public static Expr GreaterThan<TSource, TResult>(Expression<Func<TSource, TResult>> exprName, object value)
+        {
+            string name = GetExprName<TSource, TResult>(exprName);
+            return new GreaterThanExpr(name, value);
+        }
+
+        public static Expr GreaterThanEqual<TSource, TResult>(Expression<Func<TSource, TResult>> exprName, object value)
+        {
+            string name = GetExprName<TSource, TResult>(exprName);
+            return new GreaterThanEqualExpr(name, value);
+        }
+
+        public static Expr LessThan<TSource, TResult>(Expression<Func<TSource, TResult>> exprName, object value)
+        {
+            string name = GetExprName<TSource, TResult>(exprName);
+            return new LessThanExpr(name, value);
+        }
+
+        public static Expr LessThanEqual<TSource, TResult>(Expression<Func<TSource, TResult>> exprName, object value)
+        {
+            string name = GetExprName<TSource, TResult>(exprName);
+            return new LessThanEqualExpr(name, value);
+        }
+
+        public static Expr Between<TSource, TResult>(Expression<Func<TSource, TResult>> exprName, object minValue, object maxValue)
+        {
+            string name = GetExprName<TSource, TResult>(exprName);
+            return new BetweenExpr(name, minValue, maxValue);
+        }
+
+        public static Expr In<TSource, TResult>(Expression<Func<TSource, TResult>> exprName, params object[] values)
+        {
+            string name = GetExprName<TSource, TResult>(exprName);
+            return new InExpr(name, values);
+        }
+
+        public static Expr NotIn<TSource, TResult>(Expression<Func<TSource, TResult>> exprName, params object[] values)
+        {
+            string name = GetExprName<TSource, TResult>(exprName);
+            return new NotInExpr(name, values);
+        }
+
+
+        public static Expr Equal(string name, object value)
+        {
+            return new EqualExpr(name, value);
+        }
+
+        public static Expr NotEqual(string name, object value)
+        {
+            return new NotEqualExpr(name, value);
+        }
+
+        public static Expr Like(string name, object value)
+        {
+            return new LikeExpr(name, value);
+        }
+
+        public static Expr NotLike(string name, object value)
+        {
+            return new NotLikeExpr(name, value);
+        }
+
+        public static Expr GreaterThan(string name, object value)
+        {
+            return new GreaterThanExpr(name, value);
+        }
+
+        public static Expr GreaterThanEqual(string name, object value)
+        {
+            return new GreaterThanEqualExpr(name, value);
+        }
+
+        public static Expr LessThan(string name, object value)
+        {
+            return new LessThanExpr(name, value);
+        }
+
+        public static Expr LessThanEqual(string name, object value)
+        {
+            return new LessThanEqualExpr(name, value);
+        }
+
+        public static Expr Between(string name, object minValue, object maxValue)
+        {
+            return new BetweenExpr(name, minValue, maxValue);
+        }
+
+        public static Expr In(string name, params object[] values)
+        {
+            return new InExpr(name, values);
+        }
+
+        public static Expr NotIn(string name, params object[] values)
+        {
+            return new NotInExpr(name, values);
+        }
+    }
+
+    internal class AndExpr : ExprCollection
+    {
+        public AndExpr(params Expr[] exprs) : base("AND", exprs) { }
+    }
+
+    internal class AscExpr : OrderByExpr
+    {
+        public AscExpr(string name)
+            : base(name, "ASC")
+        { }
+    }
+
+    internal class BetweenExpr : Expr
+    {
+        protected object MinValue { get; set; }
+        protected object MaxValue { get; set; }
+        public BetweenExpr(string name, object minValue, object maxValue)
+        {
+            this.Name = name;
+            this.MinValue = minValue;
+            this.MaxValue = maxValue;
+        }
+
+        public override string ToWhere(DynamicParameters parameters)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters", "操作参数容器不能为空");
+            }
+            string nameMin = string.Format("@{0}Min", this.Name);
+            string nameMax = string.Format("@{0}Max", this.Name);
+            parameters.Add(nameMin, this.MinValue);
+            parameters.Add(nameMax, this.MaxValue);
+            return string.Format(" {0} BETWEEN {1} AND {0} ", this.Name, nameMin, nameMax);
+        }
+    }
+
+    internal class DescExpr : OrderByExpr
+    {
+        public DescExpr(string name)
+            : base(name, "DESC")
+        { }
+    }
+
+    internal class EqualExpr : Expr
+    {
+        public EqualExpr(string name, object value)
+        {
+            this.Name = name;
+            this.Value = value;
+            this.Join = "=";
+        }
+    }
+
+    internal abstract class ExprCollection : Expr
+    {
+        protected IList<Expr> ExprList { get; set; }
+
+        public ExprCollection(string join, params Expr[] exprs)
+        {
+            this.Join = join;
+            this.ExprList = new List<Expr>(exprs);
+        }
+
+        public override string ToWhere(DynamicParameters parameters)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters", "操作参数容器不能为空");
+            }
+            StringBuilder builder = new StringBuilder();
+            builder.Append("(");
+            for (int i = 0; i < ExprList.Count; i++)
+            {
+                builder.Append(ExprList[i].ToWhere(parameters));
+                if (i < ExprList.Count - 1)
+                {
+                    builder.Append(this.Join);
+                }
+            }
+            builder.Append(")");
+            return builder.ToString();
+        }
+    }
+
+    internal class GreaterThanEqualExpr : Expr
+    {
+        public GreaterThanEqualExpr(string name, object value)
+        {
+            this.Name = name;
+            this.Value = value;
+            this.Join = ">=";
+        }
+    }
+
+    internal class GreaterThanExpr : Expr
+    {
+        public GreaterThanExpr(string name, object value)
+        {
+            this.Name = name;
+            this.Value = value;
+            this.Join = ">";
+        }
+    }
+
+    internal class InExpr : Expr
+    {
+        protected object[] Values { get; set; }
+        public InExpr(string name, params object[] values)
+        {
+            this.Name = name;
+            this.Values = ConvertArray(values);
+            this.Join = "IN";
+        }
+
+        private object[] ConvertArray(object[] values)
+        {
+            if (values != null && values.Length == 1 && values[0] is Array)
+            {
+                values = (object[])System.Collections.ArrayList.Adapter((Array)values[0]).ToArray();
+            }
+            return values;
+        }
+
+        public override string ToWhere(DynamicParameters parameters)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters", "操作参数容器不能为空");
+            }
+            StringBuilder builder = new StringBuilder();
+            builder.Append(" " + this.Name + " IN (");
+            for (int i = 0; i < Values.Length; i++)
+            {
+                parameters.Add("@" + this.Name + i, Values[i]);
+                builder.Append("@" + this.Name + i);
+                if (i + 1 < Values.Length)
+                {
+                    builder.Append(", ");
+                }
+            }
+            builder.Append(")");
+            return builder.ToString();
+        }
+    }
+
+    internal class LessThanEqualExpr : Expr
+    {
+        public LessThanEqualExpr(string name, object value)
+        {
+            this.Name = name;
+            this.Value = value;
+            this.Join = "<=";
+        }
+    }
+
+    internal class LessThanExpr : Expr
+    {
+        public LessThanExpr(string name, object value)
+        {
+            this.Name = name;
+            this.Value = value;
+            this.Join = "<";
+        }
+    }
+
+    internal class LikeExpr : Expr
+    {
+        public LikeExpr(string name, object value)
+        {
+            this.Name = name;
+            this.Value = value;
+            this.Join = "LIKE";
+        }
+    }
+
+    internal class NotEqualExpr : Expr
+    {
+        public NotEqualExpr(string name, object value)
+        {
+            this.Name = name;
+            this.Value = value;
+            this.Join = "<>";
+        }
+    }
+
+    internal class NotInExpr : Expr
+    {
+        protected object[] Values { get; set; }
+        public NotInExpr(string name, params object[] values)
+        {
+            this.Name = name;
+            this.Values = ConvertArray(values);
+            this.Join = "NOT IN";
+        }
+
+        private object[] ConvertArray(object[] values)
+        {
+            if (values != null && values.Length == 1 && values[0] is Array)
+            {
+                values = (object[])System.Collections.ArrayList.Adapter((Array)values[0]).ToArray();
+            }
+            return values;
+        }
+
+        public override string ToWhere(DynamicParameters parameters)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters", "操作参数容器不能为空");
+            }
+            StringBuilder builder = new StringBuilder();
+            builder.Append(" " + this.Name + " NOT IN (");
+            for (int i = 0; i < Values.Length; i++)
+            {
+                parameters.Add("@" + this.Name + i, Values[i]);
+                builder.Append("@" + this.Name + i);
+                if (i + 1 < Values.Length)
+                {
+                    builder.Append(", ");
+                }
+            }
+            builder.Append(")");
+            return builder.ToString();
+        }
+    }
+
+    internal class NotLikeExpr : Expr
+    {
+        public NotLikeExpr(string name, object value)
+        {
+            this.Name = name;
+            this.Value = value;
+            this.Join = "NOT LIKE";
+        }
+    }
+
+    internal class OrderByCollection : OrderByExpr
+    {
+        protected IList<OrderByExpr> OrderByList { get; set; }
+
+        public OrderByCollection(params OrderByExpr[] exprs)
+            : base(null, null)
+        {
+            this.OrderByList = new List<OrderByExpr>(exprs);
+        }
+
+        public override string ToOrderBy()
+        {
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < OrderByList.Count; i++)
+            {
+                builder.Append(OrderByList[i].ToOrderBy());
+                if (i < OrderByList.Count - 1)
+                {
+                    builder.Append(", ");
+                }
+            }
+            return builder.ToString();
+        }
+    }
+
+    public abstract class OrderByExpr
+    {
+        protected string Name { get; set; }
+        protected string OrderBy { get; set; }
+
+        public OrderByExpr(string name, string orderBy)
+        {
+            this.Name = name;
+            this.OrderBy = orderBy;
+        }
+
+        public virtual string ToOrderBy()
+        {
+            return this.Name + " " + this.OrderBy;
+        }
+
+        public static OrderByExpr Asc<TSource, TResult>(Expression<Func<TSource, TResult>> exprName)
+        {
+            string name = GetExprName(exprName);
+            return new AscExpr(name);
+        }
+
+        public static OrderByExpr Desc<TSource, TResult>(Expression<Func<TSource, TResult>> exprName)
+        {
+            string name = GetExprName(exprName);
+            return new DescExpr(name);
+        }
+
+        public static OrderByExpr Asc(string name)
+        {
+            return new AscExpr(name);
+        }
+
+        public static OrderByExpr Desc(string name)
+        {
+            return new DescExpr(name);
+        }
+
+        public static OrderByExpr OrderByJoin(params OrderByExpr[] exprs)
+        {
+            if (exprs == null)
+            {
+                throw new ArgumentNullException("exprs", "表达式不能为空");
+            }
+            return new OrderByCollection(exprs);
+        }
+
+        private static string GetExprName<TSource, TResult>(Expression<Func<TSource, TResult>> exprName)
+        {
+            MemberExpression memberExpr = exprName.Body as MemberExpression;
+            if (memberExpr == null)
+            {
+                throw new ArgumentNullException("exprName", "表达式不正确");
+            }
+            PropertyInfo property = memberExpr.Member as PropertyInfo;
+            if (property == null)
+            {
+                throw new ArgumentNullException("property", "表达式不正确");
+            }
+            return property.Name;
+        }
+    }
+
+    internal class OrExpr : ExprCollection
+    {
+        public OrExpr(params Expr[] exprs) : base("OR", exprs) { }
+    }
+}
